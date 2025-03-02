@@ -92,9 +92,9 @@ The simulation is based on Newton's law of universal gravitation. Here's a break
 
 - **Gravity Calculation:** The gravitational force between two objects is calculated using the formula:
   
-  \[
+  $$
   F = G \frac{m_1 m_2}{r^2}
-  \]
+  $$
   
   Where:
   - \( F \) is the gravitational force.
