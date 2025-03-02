@@ -1,10 +1,21 @@
 import "./style.css";
 
+/** @type {HTMLCanvasElement} */
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
 
+// Initialize canvas size
+function initCanvasSize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+initCanvasSize();
+
+window.addEventListener("resize", () => {
+  initCanvasSize();
+});
+
+/** @type {GravityObject[]} */
 const objects = [];
 const G = 0.1; // Gravitational constant
 
@@ -43,27 +54,41 @@ class GravityObject {
   }
 }
 
-canvas.addEventListener("click", (event) => {
+function addObject(x, y) {
   const radius = parseFloat(sizeInput.value) || 10;
   const density = parseFloat(densityInput.value) || 1;
   const mass = density * radius * radius;
-  objects.push(new GravityObject(event.clientX, event.clientY, radius, mass));
+  objects.push(new GravityObject(x, y, radius, mass));
+}
+
+canvas.addEventListener("click", (event) => {
+  event.preventDefault();
+  addObject(event.clientX, event.clientY);
+});
+
+canvas.addEventListener("touchstart", (event) => {
+  event.preventDefault();
+  const touch = event.touches[0];
+  addObject(touch.clientX, touch.clientY);
 });
 
 function applyGravity() {
   for (let i = 0; i < objects.length; i++) {
     for (let j = i + 1; j < objects.length; j++) {
-      const a = objects[i];
-      const b = objects[j];
-      const dx = b.x - a.x;
-      const dy = b.y - a.y;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-      if (distance > a.radius + b.radius) {
-        const force = (G * a.mass * b.mass) / (distance * distance);
+      const objectA = objects[i];
+      const objectB = objects[j];
+      const dx = objectB.x - objectA.x;
+      const dy = objectB.y - objectA.y;
+      const distanceSq = dx * dx + dy * dy;
+      const distance = Math.sqrt(distanceSq);
+      const minDistance = objectA.radius + objectB.radius;
+
+      if (distance > minDistance) {
+        const force = (G * objectA.mass * objectB.mass) / distanceSq;
         const fx = force * (dx / distance);
         const fy = force * (dy / distance);
-        a.applyForce(fx, fy);
-        b.applyForce(-fx, -fy);
+        objectA.applyForce(fx, fy);
+        objectB.applyForce(-fx, -fy);
       }
     }
   }
@@ -72,10 +97,10 @@ function applyGravity() {
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   applyGravity();
-  objects.forEach((obj) => {
+  for (const obj of objects) {
     obj.update();
     obj.draw();
-  });
+  }
   requestAnimationFrame(animate);
 }
 animate();

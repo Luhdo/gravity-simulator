@@ -26,14 +26,51 @@ body {
   top: 10px;
   left: 10px;
   background: rgba(0, 0, 0, 0.7);
-  padding: 10px;
-  border-radius: 5px;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  backdrop-filter: blur(5px);
 }
 
-label,
-input {
-  margin-right: 10px;
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+label {
+  font-size: 14px;
   color: white;
+  min-width: 60px;
+}
+
+input {
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input:focus {
+  border-color: #5656ac;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+input[type="number"] {
+  width: 80px;
+}
+
+input[type="color"] {
+  padding: 3px;
+  width: 40px;
+  height: 30px;
+  cursor: pointer;
 }
 
 @media (prefers-color-scheme: light) {
@@ -41,10 +78,56 @@ input {
     color: #213547;
     background-color: #ffffff;
   }
-  a:hover {
-    color: #747bff;
-  }
-  button {
+
+  body {
     background-color: #f9f9f9;
+    color: #213547;
+  }
+
+  .controls {
+    background: rgba(255, 255, 255, 0.7);
+  }
+
+  label {
+    color: #213547;
+  }
+
+  input {
+    border-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #213547;
+  }
+
+  input:focus {
+    border-color: #747bff;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+}
+
+@media (max-width: 600px) {
+  .controls {
+    top: 5px;
+    left: 5px;
+    padding: 10px;
+    gap: 8px;
+  }
+
+  label {
+    font-size: 12px;
+    min-width: 50px;
+  }
+
+  input {
+    padding: 6px;
+    font-size: 12px;
+  }
+
+  input[type="number"] {
+    width: 70px;
+  }
+
+  input[type="color"] {
+    width: 35px;
+    height: 25px;
   }
 }

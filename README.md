@@ -92,15 +92,13 @@ The simulation is based on Newton's law of universal gravitation. Here's a break
 
 - **Gravity Calculation:** The gravitational force between two objects is calculated using the formula:
   
-  $$
-  F = G \frac{m_1 m_2}{r^2}
-  $$
+  $$F=G\frac{m_1 m_2}{r^2}$$
   
   Where:
-  - \( F \) is the gravitational force.
-  - \( G \) is the gravitational constant (set to 0.1 in this simulation).
-  - \( m_1 \) and \( m_2 \) are the masses of the two objects.
-  - \( r \) is the distance between the centers of the two objects.
+  - $F$ is the gravitational force.
+  - $G$ is the gravitational constant (set to 0.1 in this simulation).
+  - $m_1$ and $m_2$ are the masses of the two objects.
+  - $r$ is the distance between the centers of the two objects.
 
 - **Object Movement:** Each object's velocity is updated based on the gravitational forces acting on it. The position is then updated using the velocity.
 
